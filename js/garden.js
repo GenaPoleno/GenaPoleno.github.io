@@ -1,94 +1,82 @@
 /**
- * garden.js (версия 2.0)
- * Теперь поддерживает отображение Markdown-записей.
- * Изменения:
- * 1. Ищет файлы с расширением .md в папке /entries
- * 2. Генерирует ссылки вида: entry-template.html?file=имя-файла.md
- * 3. Сохраняет возможность открытия старых .html файлов
+ * garden.js (версия 4.0 — статичный, садовый)
  * 
- * Логика работы:
- * - Если есть .md файл с таким же именем, как .html — показываем .md версию
- * - Иначе показываем обычный HTML
+ * Принципы:
+ * - Однократный запрос к GitHub API за списком файлов
+ * - Дата берётся из имени файла: 2025-12-05-tema.md
+ * - Сортировка: новые записи сверху (по имени файла)
+ * - Нет запросов на каждый файл → масштабируемо
  */
 
-// 1. URL для GitHub API (папка с записями)
-const repoUrl = 'https://api.github.com/repos/GenaPoleno/GenaPoleno.github.io/contents/entries';
+const REPO_API = 'https://api.github.com/repos/GenaPoleno/GenaPoleno.github.io/contents/entries';
 const gardenMap = document.querySelector('.garden-map');
 
-// 2. Функция преобразования имени файла в человекочитаемый заголовок
+// Преобразует имя файла в заголовок: "2025-12-05-tema.md" → "Tema"
 function formatTitle(filename) {
-  // Убираем расширение
-  let title = filename.replace(/\.(html|md)$/, '');
-  // Заменяем дефисы и подчёркивания на пробелы
-  title = title.replace(/[-_]/g, ' ');
-  // Делаем первую букву каждого слова заглавной
-  title = title.replace(/\b\w/g, char => char.toUpperCase());
-  return title;
+  // Убираем дату и расширение
+  let clean = filename.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/\.(md|html)$/, '');
+  // Заменяем дефисы на пробелы
+  clean = clean.replace(/-/g, ' ');
+  // Делаем каждое слово с заглавной буквы
+  return clean.replace(/\b\w/g, c => c.toUpperCase());
 }
 
-// 3. Основная функция загрузки записей
+// Извлекает дату из имени: "2025-12-05-..." → { day, month, year }
+function extractDate(filename) {
+  const match = filename.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (!match) return null;
+  const [, year, month, day] = match;
+  return { year, month, day };
+}
+
+// Форматирует дату: "5 дек 2025"
+function formatDate(dateObj) {
+  if (!dateObj) return '';
+  const d = parseInt(dateObj.day, 10);
+  const m = parseInt(dateObj.month, 10) - 1; // месяцы с 0
+  const months = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн',
+                  'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+  return `${d} ${months[m]} ${dateObj.year}`;
+}
+
+// Основная функция
 async function loadEntries() {
   try {
-    // Запрашиваем список файлов в папке /entries
-    const response = await fetch(repoUrl);
+    // Один запрос за списком файлов
+    const response = await fetch(REPO_API);
+    if (!response.ok) throw new Error('Не удалось загрузить записи');
     
-    if (!response.ok) {
-      // Обработка лимита GitHub API (60 запросов/час без авторизации)
-      if (response.status === 403) {
-        throw new Error('Превышен лимит запросов к GitHub. Обновите страницу через минуту.');
-      }
-      throw new Error(`Ошибка сервера: ${response.status}`);
-    }
-
     const files = await response.json();
     
-    // 4. Группируем файлы по базовому имени (без расширения)
-    const entriesMap = new Map();
-    
-    files.forEach(file => {
-      if (file.name.endsWith('.html') || file.name.endsWith('.md')) {
-        // Имя без расширения (example.html → example)
-        const baseName = file.name.replace(/\.(html|md)$/, '');
-        
-        if (!entriesMap.has(baseName)) {
-          entriesMap.set(baseName, { html: false, md: false });
-        }
-        
-        const entry = entriesMap.get(baseName);
-        if (file.name.endsWith('.html')) entry.html = true;
-        if (file.name.endsWith('.md')) entry.md = true;
-      }
+    // Фильтруем только .md и .html
+    const entries = files
+      .filter(f => f.name.endsWith('.md') || f.name.endsWith('.html'))
+      .map(f => ({
+        name: f.name,
+        title: formatTitle(f.name),
+        date: extractDate(f.name),
+        url: f.name.endsWith('.md')
+          ? `entry-template.html?file=${f.name}`
+          : `entries/${f.name}`
+      }))
+      // Сортируем по имени файла в обратном порядке (новые сверху)
+      .sort((a, b) => b.name.localeCompare(a.name));
+
+    // Очищаем и рендерим
+    gardenMap.innerHTML = '';
+    entries.forEach(entry => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = entry.url;
+      a.textContent = `${entry.title} • ${formatDate(entry.date)}`;
+      li.appendChild(a);
+      gardenMap.appendChild(li);
     });
 
-    // 5. Создаём элементы списка для каждой записи
-    // Сортируем по алфавиту (новые записи сверху, если имена начинаются с даты)
-    Array.from(entriesMap.keys())
-      .sort((a, b) => b.localeCompare(a))
-      .forEach(baseName => {
-        const entry = entriesMap.get(baseName);
-        const li = document.createElement('li');
-        const a = document.createElement('a');
-        
-        // Приоритет: если есть .md версия — используем её
-        if (entry.md) {
-          a.href = `entry-template.html?file=${baseName}.md`;
-        } else if (entry.html) {
-          a.href = `entries/${baseName}.html`;
-        }
-        
-        a.textContent = formatTitle(baseName);
-        li.appendChild(a);
-        gardenMap.appendChild(li);
-      });
-
   } catch (error) {
-    console.error('Ошибка загрузки записей:', error);
-    
-    const errorItem = document.createElement('li');
-    errorItem.innerHTML = `<span style="color: #e53935">⚠️ ${error.message}</span>`;
-    gardenMap.appendChild(errorItem);
+    console.error('Ошибка:', error);
+    gardenMap.innerHTML = `<li><span style="color:#e53935">⚠️ ${error.message}</span></li>`;
   }
 }
 
-// 6. Запускаем при загрузке страницы
 document.addEventListener('DOMContentLoaded', loadEntries);
