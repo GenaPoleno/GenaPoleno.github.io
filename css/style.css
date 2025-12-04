@@ -188,3 +188,37 @@ footer {
   75% { transform: rotate(3deg); }
   100% { transform: rotate(0deg); }
 }
+
+/* ——— Хедер внутри записей ——— */
+.entry-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px dashed var(--leaf-green);
+}
+
+.entry-header .header-link {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+
+.entry-header .header-link:hover {
+  transform: translateY(-2px);
+}
+
+.entry-header .header-link:hover .logo {
+  animation: sway 1s ease-in-out infinite;
+}
+
+.entry-header .header-link:hover .blog-title {
+  color: var(--leaf-green);
+}
+
+.entry-header .blog-title {
+  font-size: 1.6rem;
+  color: var(--soil-brown);
+  transition: color 0.3s ease;
+}
