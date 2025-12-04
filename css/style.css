@@ -78,3 +78,61 @@ footer {
   body { padding: 1rem; }
   h1 { font-size: 1.9rem; }
 }
+
+/* ——— Уровень 1: Визуальный ритм главной ——— */
+
+header {
+  text-align: center;
+  margin: 3rem 0 2.5rem;
+}
+
+header p {
+  font-size: 1.1rem;
+  color: var(--soil-brown);
+  max-width: 550px;
+  margin: 0.5rem auto 0;
+  font-style: italic;
+}
+
+/* Плавное появление записей */
+.garden-map {
+  list-style: none;
+  padding: 0;
+}
+
+.garden-map li {
+  margin: 1.6rem 0;
+  opacity: 0;
+  animation: fadeIn 0.6s forwards;
+}
+
+.garden-map li:nth-child(1) { animation-delay: 0.1s; }
+.garden-map li:nth-child(2) { animation-delay: 0.2s; }
+.garden-map li:nth-child(3) { animation-delay: 0.3s; }
+.garden-map li:nth-child(4) { animation-delay: 0.4s; }
+.garden-map li:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Мягкое движение ссылки при наведении */
+.garden-map a {
+  display: inline-block;
+  padding: 0.2rem 0;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.garden-map a:hover {
+  transform: translateX(3px);
+  color: var(--soil-brown);
+}
+
+footer {
+  margin-top: 3.5rem;
+  padding-top: 2rem;
+  text-align: center;
+  color: #777;
+  font-size: 0.95rem;
+}
