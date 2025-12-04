@@ -4,73 +4,27 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Запись | root.access</title>
-  
-  <!-- Основные стили сада -->
   <link rel="stylesheet" href="../css/style.css">
-  
-  <!-- Конвертер Markdown -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  
-  <!-- Стили, специфичные только для записей -->
-  <style>
-    .entry-content {
-      font-size: 1.05rem;
-      line-height: 1.7;
-      margin: 2rem 0;
-    }
-    
-    .entry-content h1,
-    .entry-content h2 {
-      color: var(--soil-brown);
-      margin-top: 1.5em;
-    }
-    
-    .entry-content a {
-      word-break: break-word;
-    }
-    
-    .entry-content img {
-      max-width: 100%;
-      border-radius: 4px;
-      margin: 1rem 0;
-    }
-    
-    .back-link {
-      display: inline-block;
-      margin-top: 2rem;
-      padding: 0.5rem 1rem;
-      background: rgba(45, 125, 54, 0.1);
-      border-radius: 4px;
-      text-decoration: none;
-      color: var(--leaf-green);
-    }
-    
-    .back-link:hover {
-      background: rgba(45, 125, 54, 0.2);
-    }
-  </style>
 </head>
 <body>
-
-  <!-- ХЕДЕР ЗАПИСИ (анимация работает, т.к. стили уже в style.css) -->
+  <!-- ЕДИНЫЙ ЛОГОТИП НА ВСЕХ СТРАНИЦАХ -->
   <header class="entry-header">
     <a href="../index.html" class="header-link">
-      <svg width="28" height="28" class="logo" style="display: inline-block; margin-right: 0.4em; vertical-align: bottom;" aria-hidden="true">
-        <rect x="4" y="24" width="20" height="5" fill="var(--soil-brown)" rx="2"/>
-        <path d="M14 24 C10 20, 8 16, 14 10 C20 16, 18 20, 14 24"
-              fill="none" stroke="var(--leaf-green)" stroke-width="2.5" stroke-linecap="round"/>
+      <svg class="logo" aria-hidden="true" viewBox="0 0 32 32">
+        <rect x="4" y="26" width="24" height="6" fill="var(--warm-earth)" rx="3"/>
+        <path d="M16 26 C10 20, 8 14, 16 8 C24 14, 22 20, 16 26" 
+              fill="none" stroke="var(--leaf-green)" stroke-width="3" stroke-linecap="round"/>
       </svg>
       <span class="blog-title">root.access</span>
     </a>
   </header>
 
-  <!-- Контент записи (сюда подставится Markdown) -->
   <article class="entry-content">
     <div id="markdown-content">Загрузка...</div>
     <a href="../index.html" class="back-link">← вернуться в сад</a>
   </article>
 
-  <!-- Скрипт загрузки и отображения записи -->
   <script>
     async function loadEntry() {
       try {
@@ -91,7 +45,6 @@
         
         document.getElementById('markdown-content').innerHTML = htmlContent;
         
-        // Устанавливаем заголовок страницы
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = htmlContent;
         const firstHeading = tempDiv.querySelector('h1, h2');
