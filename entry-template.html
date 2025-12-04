@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Запись | root.access</title>
+  
+  <!-- Подключаем твои стили -->
+  <link rel="stylesheet" href="../css/style.css">
+  
+  <!-- Подключаем marked.js для конвертации Markdown -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  
+  <style>
+    /* Стили специально для контента из Markdown */
+    .entry-content {
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+    
+    .entry-content h1, 
+    .entry-content h2 {
+      color: var(--soil-brown);
+      margin-top: 1.5em;
+    }
+    
+    .entry-content a {
+      word-break: break-word;
+    }
+    
+    .entry-content img {
+      max-width: 100%;
+      border-radius: 4px;
+      margin: 1rem 0;
+    }
+    
+    .back-link {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.5rem 1rem;
+      background: rgba(45, 125, 54, 0.1);
+      border-radius: 4px;
+      text-decoration: none;
+      color: var(--leaf-green);
+    }
+    
+    .back-link:hover {
+      background: rgba(45, 125, 54, 0.2);
+    }
+  </style>
+</head>
+<body>
+  <article class="entry-content">
+    <!-- Сюда будет вставлен контент из Markdown -->
+    <div id="markdown-content">Загрузка...</div>
+    
+    <a href="../index.html" class="back-link">← вернуться в сад</a>
+  </article>
+
+  <script>
+    /**
+     * Функция загрузки и отображения записи
+     * 1. Получает имя файла из URL (entries/имя-файла.md)
+     * 2. Загружает .md файл через fetch
+     * 3. Конвертирует в HTML через marked.js
+     * 4. Вставляет в страницу
+     */
+    async function loadEntry() {
+      try {
+        // 1. Получаем имя .md файла из URL
+        // Пример URL: https://genapoleno.github.io/entry-template.html?file=my-post.md
+        const urlParams = new URLSearchParams(window.location.search);
+        const mdFile = urlParams.get('file');
+        
+        if (!mdFile) {
+          throw new Error('Не указан файл для загрузки');
+        }
+
+        // 2. Загружаем Markdown-файл
+        const response = await fetch(`../entries/${mdFile}`);
+        
+        if (!response.ok) {
+          throw new Error(`Файл не найден: ${mdFile}`);
+        }
+        
+        const markdownText = await response.text();
+        
+        // 3. Конвертируем в HTML с настройками безопасности
+        marked.setOptions({
+          sanitize: true, // Защита от XSS-атак
+          breaks: true,   // Переносы строк без двух пробелов
+        });
+        
+        const htmlContent = marked.parse(markdownText);
+        
+        // 4. Вставляем результат в страницу
+        document.getElementById('markdown-content').innerHTML = htmlContent;
+        
+        // 5. Устанавливаем заголовок страницы из первого заголовка в Markdown
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = htmlContent;
+        const firstHeading = tempDiv.querySelector('h1, h2');
+        if (firstHeading) {
+          document.title = `${firstHeading.textContent} | root.access`;
+        }
+        
+      } catch (error) {
+        console.error('Ошибка загрузки записи:', error);
+        document.getElementById('markdown-content').innerHTML = `
+          <div style="color: #e53935; padding: 1rem; border: 1px solid #ffcdd2; border-radius: 4px;">
+            <strong>⚠️ Ошибка:</strong> ${error.message}
+            <br><small>Проверьте имя файла в URL или содержимое .md файла</small>
+          </div>
+        `;
+      }
+    }
+
+    // Запускаем загрузку, когда страница готова
+    document.addEventListener('DOMContentLoaded', loadEntry);
+  </script>
+</body>
+</html>
