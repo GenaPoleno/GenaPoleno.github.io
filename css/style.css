@@ -36,11 +36,9 @@ body {
   transition: all 0.3s ease;
 }
 
-/* КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: АНИМАЦИЯ ПРИ НАВЕДЕНИИ */
-.header-link:hover {
-  transform: translateY(-2px);
-  /* Анимация применяется ко всему контейнеру */
-  animation: sway 1s ease-in-out infinite;
+/* ИСПРАВЛЕНО: теперь при наведении на логотип только поднимается текст */
+.header-link:hover .blog-title {
+  transform: translateY(-1px); /* Едва заметное движение */
 }
 
 .blog-title {
@@ -48,22 +46,18 @@ body {
   color: var(--warm-earth);
   letter-spacing: -0.03em;
   font-weight: 400;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease; /* Добавлено transform в transition */
 }
 
 .logo {
   width: 32px;
   height: 32px;
   transition: transform 0.4s ease;
-  /* Анимация теперь работает через header-link:hover */
 }
 
-/* ——— КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: ОПРЕДЕЛЕНИЕ АНИМАЦИИ ——— */
-@keyframes sway {
-  0% { transform: rotate(0deg); }
-  25% { transform: rotate(-3deg); }
-  75% { transform: rotate(3deg); }
-  100% { transform: rotate(0deg); }
+/* ИСПРАВЛЕНО: анимация покачивания применяется только к эмблеме при наведении на общий блок */
+.header-link:hover .logo {
+  animation: sway 1s ease-in-out infinite;
 }
 
 /* ——— ПОДЗАГОЛОВОК ——— */
@@ -71,16 +65,17 @@ body {
   font-size: 1.1rem;
   color: var(--warm-earth);
   max-width: 550px;
-  margin: 0.5rem auto 0;
+  margin: 0.5rem 0 0; /* Убран auto для выравнивания по левому краю */
   font-style: italic;
   font-weight: 300;
-  text-align: center; /* Выравниваем по центру */
+  text-align: left; /* Выравнивание по левому краю */
+  padding-left: 2px; /* Небольшой отступ для точного выравнивания */
 }
 
 /* ——— ЗАГОЛОВКИ В ЗАПИСЯХ ——— */
 .entry-content h1,
 .entry-content h2 {
-  color: var(--warm-earth); /* КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: новый цвет */
+  color: var(--warm-earth);
   margin-top: 1.5em;
 }
 
@@ -118,6 +113,13 @@ footer {
 }
 
 /* ——— АНИМАЦИИ ——— */
+@keyframes sway {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(-3deg); }
+  75% { transform: rotate(3deg); }
+  100% { transform: rotate(0deg); }
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: translateY(0); }
