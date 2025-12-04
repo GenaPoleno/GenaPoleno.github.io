@@ -137,32 +137,49 @@ footer {
   font-size: 0.95rem;
 }
 
-/* ——— Анимация логотипа и названия ——— */
+/* ——— Единый хедер ——— */
 
 .garden-header {
   display: flex;
   align-items: center;
   gap: 0.5em;
+  margin-bottom: 0.5rem;
 }
 
-.logo {
-  transition: transform 0.4s ease;
+.header-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
 }
 
-.logo:hover {
+.header-link:hover {
+  transform: translateY(-2px);
+}
+
+.header-link:hover .logo {
   animation: sway 1s ease-in-out infinite;
+}
+
+.header-link:hover .blog-title {
+  color: var(--leaf-green);
 }
 
 .blog-title {
   font-size: 2.4rem;
   color: var(--soil-brown);
   letter-spacing: -0.03em;
-  transition: color 0.3s ease, transform 0.3s ease;
+  transition: color 0.3s ease;
 }
 
-.blog-title:hover {
-  color: var(--leaf-green);
-  transform: translateY(-2px);
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--soil-brown);
+  max-width: 550px;
+  margin: 0.5rem 0 0;
+  font-style: italic;
+  text-align: left; /* Выравнивание по левому краю */
 }
 
 @keyframes sway {
