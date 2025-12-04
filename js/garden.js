@@ -1,8 +1,8 @@
 /**
- * garden.js (версия 4.0 — статичный, садовый)
+ * garden.js (версия 4.0)
  * 
  * Принципы:
- * - Однократный запрос к GitHub API за списком файлов
+ * - Один запрос за списком файлов
  * - Дата берётся из имени файла: 2025-12-05-tema.md
  * - Сортировка: новые записи сверху (по имени файла)
  * - Нет запросов на каждый файл → масштабируемо
@@ -13,11 +13,8 @@ const gardenMap = document.querySelector('.garden-map');
 
 // Преобразует имя файла в заголовок: "2025-12-05-tema.md" → "Tema"
 function formatTitle(filename) {
-  // Убираем дату и расширение
   let clean = filename.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/\.(md|html)$/, '');
-  // Заменяем дефисы на пробелы
   clean = clean.replace(/-/g, ' ');
-  // Делаем каждое слово с заглавной буквы
   return clean.replace(/\b\w/g, c => c.toUpperCase());
 }
 
@@ -33,7 +30,7 @@ function extractDate(filename) {
 function formatDate(dateObj) {
   if (!dateObj) return '';
   const d = parseInt(dateObj.day, 10);
-  const m = parseInt(dateObj.month, 10) - 1; // месяцы с 0
+  const m = parseInt(dateObj.month, 10) - 1;
   const months = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн',
                   'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
   return `${d} ${months[m]} ${dateObj.year}`;
@@ -42,13 +39,11 @@ function formatDate(dateObj) {
 // Основная функция
 async function loadEntries() {
   try {
-    // Один запрос за списком файлов
     const response = await fetch(REPO_API);
     if (!response.ok) throw new Error('Не удалось загрузить записи');
     
     const files = await response.json();
     
-    // Фильтруем только .md и .html
     const entries = files
       .filter(f => f.name.endsWith('.md') || f.name.endsWith('.html'))
       .map(f => ({
@@ -59,10 +54,8 @@ async function loadEntries() {
           ? `entry-template.html?file=${f.name}`
           : `entries/${f.name}`
       }))
-      // Сортируем по имени файла в обратном порядке (новые сверху)
       .sort((a, b) => b.name.localeCompare(a.name));
 
-    // Очищаем и рендерим
     gardenMap.innerHTML = '';
     entries.forEach(entry => {
       const li = document.createElement('li');
