@@ -12,8 +12,8 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   
   <header class="entry-header">
-  <a href="../index.html" class="back-link">
-    <svg width="28" height="28" style="display: inline-block; margin-right: 0.4em; vertical-align: bottom;" aria-hidden="true">
+  <a href="../index.html" class="header-link">
+    <svg width="28" height="28" class="logo" style="display: inline-block; margin-right: 0.4em; vertical-align: bottom;" aria-hidden="true">
       <rect x="4" y="24" width="20" height="5" fill="var(--soil-brown)" rx="2"/>
       <path d="M14 24 C10 20, 8 16, 14 10 C20 16, 18 20, 14 24" 
             fill="none" stroke="var(--leaf-green)" stroke-width="2.5" stroke-linecap="round"/>
@@ -89,6 +89,38 @@
 .entry-header .blog-title:hover {
   color: var(--leaf-green);
   transform: translateY(-2px);
+}
+    .entry-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px dashed var(--leaf-green);
+}
+
+.entry-header .header-link {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+
+.entry-header .header-link:hover {
+  transform: translateY(-2px);
+}
+
+.entry-header .header-link:hover .logo {
+  animation: sway 1s ease-in-out infinite;
+}
+
+.entry-header .header-link:hover .blog-title {
+  color: var(--leaf-green);
+}
+
+.entry-header .blog-title {
+  font-size: 1.6rem;
+  color: var(--soil-brown);
+  transition: color 0.3s ease;
 }
   </style>
 </head>
