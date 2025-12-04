@@ -1,10 +1,15 @@
+/* ——— НОВАЯ ЦВЕТОВАЯ ГАММА ——— */
+/* Теплые земляные тона вместо коричневого */
 :root {
-  --leaf-green: #2d7d36;
-  --soil-brown: #5d4037;
-  --paper-bg: #fefefe;
-  --text-color: #333;
+  --leaf-green: #2e7d32;       /* Насыщенный лесной зеленый */
+  --soil-brown: #5d4037;       /* Сохраняем для акцентов, но не для текста */
+  --warm-earth: #795548;       /* Теплый терракотовый вместо коричневого */
+  --paper-bg: #fefbf7;         /* Теплый белый вместо чистого */
+  --text-color: #3e2723;       /* Темно-коричневый для текста */
+  --subtle-line: #c8e6c9;      /* Светло-зеленая для линий */
 }
 
+/* ——— ОБЩИЕ НАСТРОЙКИ ——— */
 body {
   font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
   line-height: 1.6;
@@ -13,88 +18,36 @@ body {
   padding: 2rem;
   background-color: var(--paper-bg);
   color: var(--text-color);
+  transition: background-color 0.3s;
 }
 
-header {
-  border-bottom: 1px dashed var(--leaf-green);
-  padding-bottom: 1rem;
-  margin-bottom: 2rem;
-}
-
-h1 {
-  color: var(--soil-brown);
-  font-size: 2.4rem;
-  margin: 0.2em 0 0.3em;
-  letter-spacing: -0.03em;
-}
-
-p {
-  margin-bottom: 1.2em;
-  font-size: 1.05rem;
-}
-
-a {
-  color: var(--leaf-green);
-  text-decoration: none;
-  border-bottom: 1px dotted var(--leaf-green);
-  padding: 2px 0;
-  transition: all 0.2s ease;
-}
-
-a:hover {
-  color: var(--soil-brown);
-  border-bottom-style: solid;
-}
-
-.garden-map {
-  list-style: none;
-  padding-left: 0;
-  font-size: 1.1rem;
-}
-
-.garden-map li {
-  margin-bottom: 0.8rem;
-  padding-left: 1.2em;
-  position: relative;
-}
-
-.garden-map li::before {
-  content: "→";
-  position: absolute;
-  left: 0;
-  color: var(--leaf-green);
-  font-weight: bold;
-}
-
-footer {
-  margin-top: 3rem;
-  padding-top: 1.5rem;
-  border-top: 1px dashed var(--leaf-green);
-  font-size: 0.9rem;
-  color: #666;
-}
-
-@media (max-width: 600px) {
-  body { padding: 1rem; }
-  h1 { font-size: 1.9rem; }
-}
-
-/* ——— Уровень 1: Визуальный ритм главной ——— */
-
+/* ——— ШАПКА САДА ——— */
 header {
   text-align: center;
-  margin: 3rem 0 2.5rem;
+  margin: 2.5rem 0 1.5rem;
 }
 
-header p {
+/* Убираем жирность заголовка */
+.garden-header .blog-title,
+.entry-header .blog-title {
+  font-size: 2.4rem;
+  color: var(--warm-earth);
+  letter-spacing: -0.03em;
+  font-weight: 400; /* Единый вес шрифта */
+  transition: color 0.3s ease;
+}
+
+/* Подпись — тонкий шрифт */
+.subtitle {
   font-size: 1.1rem;
-  color: var(--soil-brown);
+  color: var(--warm-earth);
   max-width: 550px;
   margin: 0.5rem auto 0;
   font-style: italic;
+  font-weight: 300; /* Тонкий шрифт */
 }
 
-/* Плавное появление записей */
+/* ——— ОСНОВНОЙ КОНТЕНТ ——— */
 .garden-map {
   list-style: none;
   padding: 0;
@@ -109,77 +62,59 @@ header p {
 .garden-map li:nth-child(1) { animation-delay: 0.1s; }
 .garden-map li:nth-child(2) { animation-delay: 0.2s; }
 .garden-map li:nth-child(3) { animation-delay: 0.3s; }
-.garden-map li:nth-child(4) { animation-delay: 0.4s; }
-.garden-map li:nth-child(5) { animation-delay: 0.5s; }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
+/* Единая разделительная линия — убираем дублирующиеся */
+header + .subtitle {
+  padding-top: 0.5rem;
+  border-top: 1px dashed var(--subtle-line);
 }
 
-/* Мягкое движение ссылки при наведении */
+/* Убираем лишние линии */
+footer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  text-align: center;
+  color: #777;
+  font-size: 0.95rem;
+  border-top: 1px dashed var(--subtle-line);
+}
+
+/* ——— АНИМАЦИЯ ЛОГОТИПА ——— */
+.logo {
+  transition: transform 0.4s ease;
+}
+
+.logo:hover {
+  animation: sway 1s ease-in-out infinite;
+}
+
+/* ——— ССЫЛКИ ——— */
+a {
+  color: var(--leaf-green);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--leaf-green);
+  padding: 2px 0;
+  transition: all 0.2s ease;
+}
+
+a:hover {
+  color: var(--warm-earth);
+  border-bottom-style: solid;
+}
+
 .garden-map a {
   display: inline-block;
   padding: 0.2rem 0;
-  transition: transform 0.2s ease, color 0.2s ease;
 }
 
 .garden-map a:hover {
   transform: translateX(3px);
-  color: var(--soil-brown);
 }
 
-footer {
-  margin-top: 3.5rem;
-  padding-top: 2rem;
-  text-align: center;
-  color: #777;
-  font-size: 0.95rem;
-}
-
-/* ——— Единый хедер ——— */
-
-.garden-header {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
-  margin-bottom: 0.5rem;
-}
-
-.header-link {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: inherit;
-  transition: all 0.3s ease;
-}
-
-.header-link:hover {
-  transform: translateY(-2px);
-}
-
-.header-link:hover .logo {
-  animation: sway 1s ease-in-out infinite;
-}
-
-.header-link:hover .blog-title {
-  color: var(--leaf-green);
-}
-
-.blog-title {
-  font-size: 2.4rem;
-  color: var(--soil-brown);
-  letter-spacing: -0.03em;
-  transition: color 0.3s ease;
-}
-
-.subtitle {
-  font-size: 1.1rem;
-  color: var(--soil-brown);
-  max-width: 550px;
-  margin: 0.5rem 0 0;
-  font-style: italic;
-  text-align: left; /* Выравнивание по левому краю */
+/* ——— АНИМАЦИИ ——— */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes sway {
@@ -189,36 +124,9 @@ footer {
   100% { transform: rotate(0deg); }
 }
 
-/* ——— Хедер внутри записей ——— */
-.entry-header {
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px dashed var(--leaf-green);
-}
-
-.entry-header .header-link {
-  display: flex;
-  align-items: center;
-  gap: 0.4em;
-  text-decoration: none;
-  color: inherit;
-  transition: all 0.3s ease;
-}
-
-.entry-header .header-link:hover {
-  transform: translateY(-2px);
-}
-
-.entry-header .header-link:hover .logo {
-  animation: sway 1s ease-in-out infinite;
-}
-
-.entry-header .header-link:hover .blog-title {
-  color: var(--leaf-green);
-}
-
-.entry-header .blog-title {
-  font-size: 1.6rem;
-  color: var(--soil-brown);
-  transition: color 0.3s ease;
+/* ——— АДАПТИВНОСТЬ ——— */
+@media (max-width: 600px) {
+  body { padding: 1rem; }
+  header { margin: 2rem 0 1rem; }
+  .blog-title { font-size: 1.9rem; }
 }
