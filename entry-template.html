@@ -1,35 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Запись | root.access</title>
   
-  <!-- Подключаем твои стили -->
+  <!-- Основные стили сада -->
   <link rel="stylesheet" href="../css/style.css">
   
-  <!-- Подключаем marked.js для конвертации Markdown -->
+  <!-- Конвертер Markdown -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   
-  <header class="entry-header">
-  <a href="../index.html" class="header-link">
-    <svg width="28" height="28" class="logo" style="display: inline-block; margin-right: 0.4em; vertical-align: bottom;" aria-hidden="true">
-      <rect x="4" y="24" width="20" height="5" fill="var(--soil-brown)" rx="2"/>
-      <path d="M14 24 C10 20, 8 16, 14 10 C20 16, 18 20, 14 24" 
-            fill="none" stroke="var(--leaf-green)" stroke-width="2.5" stroke-linecap="round"/>
-    </svg>
-    <span class="blog-title">root.access</span>
-  </a>
-</header>
-  
+  <!-- Стили, специфичные только для записей -->
   <style>
-    /* Стили специально для контента из Markdown */
     .entry-content {
       font-size: 1.05rem;
       line-height: 1.7;
+      margin: 2rem 0;
     }
     
-    .entry-content h1, 
+    .entry-content h1,
     .entry-content h2 {
       color: var(--soil-brown);
       margin-top: 1.5em;
@@ -58,92 +48,32 @@
     .back-link:hover {
       background: rgba(45, 125, 54, 0.2);
     }
-
-    .entry-header .back-link {
-  display: flex;
-  align-items: center;
-  gap: 0.4em;
-  text-decoration: none;
-  color: inherit;
-  transition: color 0.3s ease;
-}
-
-.entry-header .back-link:hover {
-  color: var(--leaf-green);
-}
-
-.entry-header .logo {
-  transition: transform 0.4s ease;
-}
-
-.entry-header .logo:hover {
-  animation: sway 1s ease-in-out infinite;
-}
-
-.entry-header .blog-title {
-  font-size: 1.6rem;
-  color: var(--soil-brown);
-  transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.entry-header .blog-title:hover {
-  color: var(--leaf-green);
-  transform: translateY(-2px);
-}
-    .entry-header {
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px dashed var(--leaf-green);
-}
-
-.entry-header .header-link {
-  display: flex;
-  align-items: center;
-  gap: 0.4em;
-  text-decoration: none;
-  color: inherit;
-  transition: all 0.3s ease;
-}
-
-.entry-header .header-link:hover {
-  transform: translateY(-2px);
-}
-
-.entry-header .header-link:hover .logo {
-  animation: sway 1s ease-in-out infinite;
-}
-
-.entry-header .header-link:hover .blog-title {
-  color: var(--leaf-green);
-}
-
-.entry-header .blog-title {
-  font-size: 1.6rem;
-  color: var(--soil-brown);
-  transition: color 0.3s ease;
-}
   </style>
 </head>
 <body>
+
+  <!-- ХЕДЕР ЗАПИСИ (анимация работает, т.к. стили уже в style.css) -->
+  <header class="entry-header">
+    <a href="../index.html" class="header-link">
+      <svg width="28" height="28" class="logo" style="display: inline-block; margin-right: 0.4em; vertical-align: bottom;" aria-hidden="true">
+        <rect x="4" y="24" width="20" height="5" fill="var(--soil-brown)" rx="2"/>
+        <path d="M14 24 C10 20, 8 16, 14 10 C20 16, 18 20, 14 24"
+              fill="none" stroke="var(--leaf-green)" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      <span class="blog-title">root.access</span>
+    </a>
+  </header>
+
+  <!-- Контент записи (сюда подставится Markdown) -->
   <article class="entry-content">
-    <!-- Сюда будет вставлен контент из Markdown -->
     <div id="markdown-content">Загрузка...</div>
-    
     <a href="../index.html" class="back-link">← вернуться в сад</a>
   </article>
 
+  <!-- Скрипт загрузки и отображения записи -->
   <script>
-    /**
-     * Функция загрузки и отображения записи
-     * 1. Получает имя файла из URL (entries/имя-файла.md)
-     * 2. Загружает .md файл через fetch
-     * 3. Конвертирует в HTML через marked.js
-     * 4. Вставляет в страницу
-     */
     async function loadEntry() {
       try {
-        // 1. Получаем имя .md файла из URL
-        // Пример URL: https://genapoleno.github.io/entry-template.html?file=my-post.md
         const urlParams = new URLSearchParams(window.location.search);
         const mdFile = urlParams.get('file');
         
@@ -151,27 +81,17 @@
           throw new Error('Не указан файл для загрузки');
         }
 
-        // 2. Загружаем Markdown-файл
         const response = await fetch(`../entries/${mdFile}`);
-        
-        if (!response.ok) {
-          throw new Error(`Файл не найден: ${mdFile}`);
-        }
+        if (!response.ok) throw new Error(`Файл не найден: ${mdFile}`);
         
         const markdownText = await response.text();
         
-        // 3. Конвертируем в HTML с настройками безопасности
-        marked.setOptions({
-          sanitize: true, // Защита от XSS-атак
-          breaks: true,   // Переносы строк без двух пробелов
-        });
-        
+        marked.setOptions({ sanitize: true, breaks: true });
         const htmlContent = marked.parse(markdownText);
         
-        // 4. Вставляем результат в страницу
         document.getElementById('markdown-content').innerHTML = htmlContent;
         
-        // 5. Устанавливаем заголовок страницы из первого заголовка в Markdown
+        // Устанавливаем заголовок страницы
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = htmlContent;
         const firstHeading = tempDiv.querySelector('h1, h2');
@@ -190,7 +110,6 @@
       }
     }
 
-    // Запускаем загрузку, когда страница готова
     document.addEventListener('DOMContentLoaded', loadEntry);
   </script>
 </body>
