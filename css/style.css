@@ -15,22 +15,30 @@ body {
   color: var(--text-color);
 }
 
-article {
-  margin: 2rem 0;
-  padding-bottom: 1.5rem;
+header {
   border-bottom: 1px dashed var(--leaf-green);
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 h1 {
   color: var(--soil-brown);
-  font-size: 2.2rem;
-  margin-top: 0;
+  font-size: 2.4rem;
+  margin: 0.2em 0 0.3em;
+  letter-spacing: -0.03em;
+}
+
+p {
+  margin-bottom: 1.2em;
+  font-size: 1.05rem;
 }
 
 a {
   color: var(--leaf-green);
   text-decoration: none;
   border-bottom: 1px dotted var(--leaf-green);
+  padding: 2px 0;
+  transition: all 0.2s ease;
 }
 
 a:hover {
@@ -38,12 +46,35 @@ a:hover {
   border-bottom-style: solid;
 }
 
-.back::before {
-  content: "← ";
+.garden-map {
+  list-style: none;
+  padding-left: 0;
+  font-size: 1.1rem;
+}
+
+.garden-map li {
+  margin-bottom: 0.8rem;
+  padding-left: 1.2em;
+  position: relative;
+}
+
+.garden-map li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
   color: var(--leaf-green);
+  font-weight: bold;
+}
+
+footer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px dashed var(--leaf-green);
+  font-size: 0.9rem;
+  color: #666;
 }
 
 @media (max-width: 600px) {
   body { padding: 1rem; }
-  h1 { font-size: 1.8rem; }
+  h1 { font-size: 1.9rem; }
 }
