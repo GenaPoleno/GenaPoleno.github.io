@@ -6,36 +6,33 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <!-- ЕДИНАЯ ШАПКА САДА -->
   <header>
-<h1>
- <div class="garden-header">
-  <a href="index.html" class="header-link">
-    <svg width="32" height="32" class="logo" style="display: inline-block; margin-right: 0.5em; vertical-align: bottom;" aria-hidden="true">
-      <!-- Земля -->
-      <rect x="4" y="26" width="24" height="6" fill="var(--soil-brown)" rx="3"/>
-      <!-- Росток -->
-      <path d="M16 26 C10 20, 8 14, 16 8 C24 14, 22 20, 16 26" 
-            fill="none" stroke="var(--leaf-green)" stroke-width="3" stroke-linecap="round"/>
-    </svg>
-    <span class="blog-title">root.access</span>
-  </a>
-</div>
-
-<p class="subtitle">цифровой сад для дикорастущих мыслей</p>
-</h1>
- 
-</header>
+    <div class="garden-header">
+      <a href="index.html" class="header-link">
+        <svg width="32" height="32" class="logo" style="display: inline-block; margin-right: 0.5em; vertical-align: bottom;" aria-hidden="true">
+          <rect x="4" y="26" width="24" height="6" fill="var(--soil-brown)" rx="3"/>
+          <path d="M16 26 C10 20, 8 14, 16 8 C24 14, 22 20, 16 26" 
+                fill="none" stroke="var(--leaf-green)" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <span class="blog-title">root.access</span>
+      </a>
+    </div>
+    <p class="subtitle">цифровой сад для дикорастущих мыслей</p>
+  </header>
 
   <main>
+    <!-- СПИСОК ЗАПИСЕЙ -->
     <ul class="garden-map">
-       <!-- Список записей будет загружаться автоматически -->
+      <!-- Автоматически генерируется через garden.js -->
     </ul>
   </main>
 
   <footer>
     <p>выращено руками в браузере | <a href="https://github.com/GenaPoleno/GenaPoleno.github.io">исходники</a></p>
   </footer>
-  <!-- Автоматическая загрузка записей из папки /entries -->
-<script src="js/garden.js"></script>
+
+  <!-- СКРИПТ АВТОМАТИЧЕСКОЙ ЗАГРУЗКИ ЗАПИСЕЙ -->
+  <script src="js/garden.js"></script>
 </body>
 </html>
