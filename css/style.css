@@ -1,4 +1,4 @@
-/* ——— ЦВЕТОВЫЕ СХЕМЫ ——— */
+/* ——— ЦВЕТОВАЯ ГАММА ——— */
 :root {
   /* Светлая тема */
   --paper-bg: #fefbf7;
@@ -15,7 +15,7 @@
   --dark-earth: #a89f91;
   --dark-leaf: #88c9a1;
   
-  /* Цвета по умолчанию (будут меняться) */
+  /* Цвета по умолчанию */
   --bg: var(--paper-bg);
   --text: var(--text-color);
   --line: var(--subtle-line);
@@ -32,7 +32,7 @@ body {
   padding: 2rem;
   background-color: var(--bg);
   color: var(--text);
-  transition: background-color 0.4s, color 0.4s; /* Плавные переходы */
+  transition: background-color 0.4s, color 0.4s;
 }
 
 /* ——— ЕДИНЫЙ ЛОГОТИП ——— */
@@ -53,9 +53,8 @@ body {
   transition: all 0.3s ease;
 }
 
-/* Анимация: при наведении только текст слегка поднимается */
 .header-link:hover .blog-title {
-  transform: translateY(-1px); /* Едва заметное движение */
+  transform: translateY(-1px);
 }
 
 .blog-title {
@@ -63,7 +62,7 @@ body {
   color: var(--earth);
   letter-spacing: -0.03em;
   font-weight: 400;
-  transition: all 0.3s ease; /* Добавлено transform в transition */
+  transition: all 0.3s ease;
 }
 
 .logo {
@@ -72,7 +71,6 @@ body {
   transition: transform 0.4s ease;
 }
 
-/* Анимация покачивания применяется только к эмблеме */
 .header-link:hover .logo {
   animation: sway 1s ease-in-out infinite;
 }
@@ -85,72 +83,15 @@ body {
   margin: 0.5rem 0 0;
   font-style: italic;
   font-weight: 300;
-  text-align: left; /* Выравнивание по левому краю */
-  padding-left: 2px; /* Небольшой отступ для точного выравнивания */
+  text-align: left;
+  padding-left: 2px;
 }
 
 /* ——— ЗАГОЛОВКИ В ЗАПИСЯХ ——— */
 .entry-content h1,
 .entry-content h2 {
-  color: var(--earth);
+  color: var(--warm-earth);
   margin-top: 1.5em;
-}
-
-/* ——— ЦИТАТЫ ——— */
-blockquote {
-  margin: 1.8rem 0;
-  padding: 1.2rem 1.5rem;
-  padding-left: 2.5rem;
-  position: relative;
-  font-style: italic;
-  font-size: 1.08rem;
-  line-height: 1.7;
-  border-left: 3px solid var(--leaf);
-  background: rgba(46, 125, 50, 0.04);
-  border-radius: 0 4px 4px 0;
-}
-
-blockquote::before {
-  content: """;
-  position: absolute;
-  left: 0.4rem;
-  top: -0.5rem;
-  font-size: 3rem;
-  color: var(--leaf);
-  opacity: 0.2;
-  font-family: Georgia, serif;
-  line-height: 1;
-}
-
-blockquote p {
-  margin: 0 0 0.7rem;
-}
-
-blockquote cite {
-  display: block;
-  text-align: right;
-  font-style: normal;
-  color: var(--earth);
-  font-weight: 500;
-  margin-top: 0.3rem;
-}
-
-blockquote a {
-  border-bottom: 1px dotted var(--leaf);
-}
-
-blockquote a:hover {
-  border-bottom-style: solid;
-}
-
-/* Тёмная тема для цитат */
-body.dark-theme blockquote {
-  background: rgba(136, 201, 161, 0.08);
-  border-color: var(--dark-leaf);
-}
-
-body.dark-theme blockquote::before {
-  color: var(--dark-leaf);
 }
 
 /* ——— ОСНОВНОЙ КОНТЕНТ ——— */
@@ -247,94 +188,13 @@ a:hover {
   transition: fill 0.3s;
 }
 
-body.dark-theme .theme-toggle svg {
-  fill: var(--dark-earth);
-}
-
-/* ——— ПАСХАЛКА С ПОЛИВОМ ——— */
-.garden-paschal {
-  position: fixed;
-  bottom: 3rem;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  pointer-events: none;
-  z-index: 50;
-}
-
-.watering-can {
-  position: absolute;
-  right: 2rem;
-  bottom: 2rem;
-  cursor: grab;
-  pointer-events: auto;
-  z-index: 100;
-  transition: transform 0.2s;
-}
-
-.watering-can:active {
-  cursor: grabbing;
-}
-
-.mound {
-  position: relative;
-  width: 80px;
-  height: 60px;
-  margin-top: 2rem;
-}
-
-.mound-top {
-  position: absolute;
-  width: 60px;
-  height: 40px;
-  background: var(--soil-dark);
-  border-radius: 50%;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0.85;
-}
-
-.mound-bottom {
-  position: absolute;
-  width: 80px;
-  height: 30px;
-  background: var(--soil-dark);
-  border-radius: 50%;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0.7;
-}
-
-.sprout {
-  position: absolute;
-  width: 8px;
-  height: 0;
-  background: var(--leaf-green);
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-radius: 4px;
-  opacity: 0;
-  transition: height 0.8s ease, opacity 0.4s;
-}
-
-.sprout.visible {
-  height: 30px;
-  opacity: 1;
-}
-
-/* Тёмная тема для пасхалки */
-body.dark-theme .mound-top,
-body.dark-theme .mound-bottom {
-  background: var(--dark-earth);
-}
-
-body.dark-theme .sprout {
-  background: var(--dark-leaf);
+/* ——— ТЁМНАЯ ТЕМА ——— */
+body.dark-theme {
+  --bg: var(--dark-bg);
+  --text: var(--dark-text);
+  --line: var(--dark-line);
+  --earth: var(--dark-earth);
+  --leaf: var(--dark-leaf);
 }
 
 /* ——— АДАПТИВНОСТЬ ——— */
@@ -342,5 +202,4 @@ body.dark-theme .sprout {
   body { padding: 1rem; }
   .blog-title { font-size: 1.9rem; }
   .theme-toggle { top: 1rem; right: 1rem; }
-  .garden-paschal { bottom: 1.5rem; }
 }
