@@ -8,12 +8,8 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
-  <!-- КНОПКА ПЕРЕКЛЮЧЕНИЯ ТЕМЫ -->
-  <button class="theme-toggle" aria-label="Переключить тему">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-      <path d="M12 3a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0112 3zm-4.657 4.657a.75.75 0 011.06-1.06l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06zm12.728 0a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 01-1.061-1.061l1.06-1.06zM12 16.5a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5zm-6.657-2.157a.75.75 0 011.061-1.06l1.06 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06zm12.728 0a.75.75 0 01-1.06-1.06l1.06-1.061a.75.75 0 011.061 1.06l-1.06 1.061zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0z"></path>
-    </svg>
-  </button>
+  <!-- ПРОСТАЯ КНОПКА ПЕРЕКЛЮЧЕНИЯ ТЕМЫ -->
+  <button class="theme-toggle" id="theme-toggle">dark</button>
 
   <!-- ЕДИНЫЙ ЛОГОТИП НА ВСЕХ СТРАНИЦАХ -->
   <header class="entry-header">
@@ -74,13 +70,21 @@
     document.addEventListener('DOMContentLoaded', function() {
       loadEntry();
       
-      // Проверяем системную тему и сохранённый выбор
-      const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+      // Проверяем сохранённый выбор
       const savedTheme = localStorage.getItem('theme');
       
-      if (savedTheme === 'dark' || (!savedTheme && prefersDarkScheme.matches)) {
+      if (savedTheme === 'dark') {
         document.body.classList.add('dark-theme');
+        document.getElementById('theme-toggle').textContent = 'light';
       }
+      
+      // Переключение темы
+      document.getElementById('theme-toggle').addEventListener('click', function() {
+        document.body.classList.toggle('dark-theme');
+        const isDark = document.body.classList.contains('dark-theme');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        this.textContent = isDark ? 'light' : 'dark';
+      });
     });
   </script>
 </body>
