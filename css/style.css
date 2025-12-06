@@ -201,3 +201,80 @@ body.dark-theme {
   .blog-title { font-size: 1.9rem; }
   .theme-toggle { top: 1rem; right: 1rem; }
 }
+
+/* ——— УЛУЧШЕННЫЕ ЦИТАТЫ ——— */
+blockquote {
+  margin: 2rem 0;
+  padding: 1.4rem 1.8rem;
+  padding-left: 2.8rem;
+  position: relative;
+  font-style: italic;
+  font-size: 1.08rem;
+  line-height: 1.7;
+  border-left: 3px solid var(--leaf);
+  background: rgba(46, 125, 50, 0.03);
+  border-radius: 0 4px 4px 0;
+  transition: all 0.3s ease;
+}
+
+blockquote:hover {
+  background: rgba(46, 125, 50, 0.05);
+}
+
+blockquote::before {
+  content: """;
+  position: absolute;
+  left: 0.4rem;
+  top: -0.3rem;
+  font-size: 3.2rem;
+  color: var(--leaf);
+  opacity: 0.15;
+  font-family: Georgia, serif;
+  line-height: 1;
+}
+
+blockquote p {
+  margin: 0 0 0.8rem;
+  font-weight: 400;
+}
+
+blockquote cite {
+  display: block;
+  text-align: right;
+  font-style: normal;
+  color: var(--earth);
+  font-weight: 500;
+  margin-top: 0.4rem;
+  font-size: 0.95rem;
+  border-top: 1px solid var(--line);
+  padding-top: 0.6rem;
+}
+
+blockquote a {
+  border-bottom: 1px dotted var(--leaf);
+  font-weight: 400;
+}
+
+blockquote a:hover {
+  border-bottom-style: solid;
+}
+
+/* Тёмная тема для цитат */
+body.dark-theme blockquote {
+  background: rgba(136, 201, 161, 0.08);
+  border-color: var(--dark-leaf);
+}
+
+body.dark-theme blockquote:hover {
+  background: rgba(136, 201, 161, 0.12);
+}
+
+body.dark-theme blockquote::before {
+  color: var(--dark-leaf);
+  opacity: 0.2;
+}
+
+body.dark-theme blockquote cite {
+  border-color: var(--dark-line);
+  color: var(--dark-earth);
+}
