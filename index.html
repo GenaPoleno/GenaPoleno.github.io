@@ -6,7 +6,6 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- ЕДИНЫЙ ЛОГОТИП И ЗАГОЛОВОК -->
   <header>
     <div class="garden-header">
       <a href="index.html" class="header-link">
@@ -30,6 +29,28 @@
   <footer>
     <p>выращено руками в браузере | <a href="https://github.com/GenaPoleno/GenaPoleno.github.io">исходники</a></p>
   </footer>
+
+  <!-- КНОПКА ТЁМНОЙ ТЕМЫ -->
+  <button class="theme-toggle" aria-label="Переключить тему">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+      <path d="M12 3a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0112 3zm-4.657 4.657a.75.75 0 011.06-1.06l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06zm12.728 0a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 01-1.061-1.061l1.06-1.06zM12 16.5a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5zm-6.657-2.157a.75.75 0 011.061-1.06l1.06 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06zm12.728 0a.75.75 0 01-1.06-1.06l1.06-1.061a.75.75 0 011.061 1.06l-1.06 1.061zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0z"></path>
+    </svg>
+  </button>
+
+  <!-- ПАСХАЛКА: ПОЛИВ САДА -->
+  <div class="garden-paschal" aria-hidden="true">
+    <div id="watering-can" class="watering-can">
+      <svg width="32" height="32" viewBox="0 0 32 32">
+        <path d="M8 22H4a2 2 0 01-2-2V8a2 2 0 012-2h4a2 2 0 012 2v4h8V8a2 2 0 012-2h4a2 2 0 012 2v12a2 2 0 01-2 2h-4v4a2 2 0 01-2 2H10a2 2 0 01-2-2v-4zm2-12v4h12V8H10zm10 10v-4H12v4h8z" 
+              fill="var(--soil-dark)" stroke="none"/>
+      </svg>
+    </div>
+    <div id="mound" class="mound">
+      <div class="mound-top"></div>
+      <div class="mound-bottom"></div>
+      <div id="sprout" class="sprout"></div>
+    </div>
+  </div>
 
   <script src="js/garden.js"></script>
 </body>
