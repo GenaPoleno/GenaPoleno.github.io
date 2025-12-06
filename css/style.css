@@ -1,10 +1,26 @@
-/* ——— ЦВЕТОВАЯ ГАММА ——— */
+/* ——— ЦВЕТОВЫЕ СХЕМЫ ——— */
 :root {
-  --leaf-green: #2e7d32;
-  --warm-earth: #795548;
+  /* Светлая тема */
   --paper-bg: #fefbf7;
   --text-color: #3e2723;
   --subtle-line: #c8e6c9;
+  --warm-earth: #795548;
+  --leaf-green: #2e7d32;
+  --soil-dark: #3e2723;
+  
+  /* Тёмная тема */
+  --dark-bg: #1a1a1d;
+  --dark-text: #e6e1cf;
+  --dark-line: #2d2d30;
+  --dark-earth: #a89f91;
+  --dark-leaf: #88c9a1;
+  
+  /* Цвета по умолчанию (будут меняться) */
+  --bg: var(--paper-bg);
+  --text: var(--text-color);
+  --line: var(--subtle-line);
+  --earth: var(--warm-earth);
+  --leaf: var(--leaf-green);
 }
 
 /* ——— ОБЩИЕ НАСТРОЙКИ ——— */
@@ -14,8 +30,9 @@ body {
   max-width: 650px;
   margin: 0 auto;
   padding: 2rem;
-  background-color: var(--paper-bg);
-  color: var(--text-color);
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.4s, color 0.4s; /* Плавные переходы */
 }
 
 /* ——— ЕДИНЫЙ ЛОГОТИП ——— */
@@ -36,14 +53,14 @@ body {
   transition: all 0.3s ease;
 }
 
-/* ИСПРАВЛЕНО: теперь при наведении на логотип только поднимается текст */
+/* Анимация: при наведении только текст слегка поднимается */
 .header-link:hover .blog-title {
   transform: translateY(-1px); /* Едва заметное движение */
 }
 
 .blog-title {
   font-size: 2.4rem;
-  color: var(--warm-earth);
+  color: var(--earth);
   letter-spacing: -0.03em;
   font-weight: 400;
   transition: all 0.3s ease; /* Добавлено transform в transition */
@@ -55,7 +72,7 @@ body {
   transition: transform 0.4s ease;
 }
 
-/* ИСПРАВЛЕНО: анимация покачивания применяется только к эмблеме при наведении на общий блок */
+/* Анимация покачивания применяется только к эмблеме */
 .header-link:hover .logo {
   animation: sway 1s ease-in-out infinite;
 }
@@ -63,9 +80,9 @@ body {
 /* ——— ПОДЗАГОЛОВОК ——— */
 .subtitle {
   font-size: 1.1rem;
-  color: var(--warm-earth);
+  color: var(--earth);
   max-width: 550px;
-  margin: 0.5rem 0 0; /* Убран auto для выравнивания по левому краю */
+  margin: 0.5rem 0 0;
   font-style: italic;
   font-weight: 300;
   text-align: left; /* Выравнивание по левому краю */
@@ -75,8 +92,65 @@ body {
 /* ——— ЗАГОЛОВКИ В ЗАПИСЯХ ——— */
 .entry-content h1,
 .entry-content h2 {
-  color: var(--warm-earth);
+  color: var(--earth);
   margin-top: 1.5em;
+}
+
+/* ——— ЦИТАТЫ ——— */
+blockquote {
+  margin: 1.8rem 0;
+  padding: 1.2rem 1.5rem;
+  padding-left: 2.5rem;
+  position: relative;
+  font-style: italic;
+  font-size: 1.08rem;
+  line-height: 1.7;
+  border-left: 3px solid var(--leaf);
+  background: rgba(46, 125, 50, 0.04);
+  border-radius: 0 4px 4px 0;
+}
+
+blockquote::before {
+  content: """;
+  position: absolute;
+  left: 0.4rem;
+  top: -0.5rem;
+  font-size: 3rem;
+  color: var(--leaf);
+  opacity: 0.2;
+  font-family: Georgia, serif;
+  line-height: 1;
+}
+
+blockquote p {
+  margin: 0 0 0.7rem;
+}
+
+blockquote cite {
+  display: block;
+  text-align: right;
+  font-style: normal;
+  color: var(--earth);
+  font-weight: 500;
+  margin-top: 0.3rem;
+}
+
+blockquote a {
+  border-bottom: 1px dotted var(--leaf);
+}
+
+blockquote a:hover {
+  border-bottom-style: solid;
+}
+
+/* Тёмная тема для цитат */
+body.dark-theme blockquote {
+  background: rgba(136, 201, 161, 0.08);
+  border-color: var(--dark-leaf);
+}
+
+body.dark-theme blockquote::before {
+  color: var(--dark-leaf);
 }
 
 /* ——— ОСНОВНОЙ КОНТЕНТ ——— */
@@ -99,7 +173,7 @@ body {
 /* ——— РАЗДЕЛИТЕЛЬНЫЕ ЛИНИИ ——— */
 header {
   padding-bottom: 1rem;
-  border-bottom: 1px dashed var(--subtle-line);
+  border-bottom: 1px dashed var(--line);
   margin-bottom: 1.5rem;
 }
 
@@ -109,7 +183,7 @@ footer {
   text-align: center;
   color: #777;
   font-size: 0.95rem;
-  border-top: 1px dashed var(--subtle-line);
+  border-top: 1px dashed var(--line);
 }
 
 /* ——— АНИМАЦИИ ——— */
@@ -127,15 +201,15 @@ footer {
 
 /* ——— ССЫЛКИ ——— */
 a {
-  color: var(--leaf-green);
+  color: var(--leaf);
   text-decoration: none;
-  border-bottom: 1px dotted var(--leaf-green);
+  border-bottom: 1px dotted var(--leaf);
   padding: 2px 0;
   transition: all 0.2s ease;
 }
 
 a:hover {
-  color: var(--warm-earth);
+  color: var(--earth);
   border-bottom-style: solid;
 }
 
@@ -148,8 +222,125 @@ a:hover {
   transform: translateX(3px);
 }
 
+/* ——— КНОПКА ПЕРЕКЛЮЧЕНИЯ ТЕМЫ ——— */
+.theme-toggle {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  z-index: 100;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+  padding: 0;
+}
+
+.theme-toggle:hover {
+  opacity: 1;
+}
+
+.theme-toggle svg {
+  fill: var(--earth);
+  transition: fill 0.3s;
+}
+
+body.dark-theme .theme-toggle svg {
+  fill: var(--dark-earth);
+}
+
+/* ——— ПАСХАЛКА С ПОЛИВОМ ——— */
+.garden-paschal {
+  position: fixed;
+  bottom: 3rem;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.watering-can {
+  position: absolute;
+  right: 2rem;
+  bottom: 2rem;
+  cursor: grab;
+  pointer-events: auto;
+  z-index: 100;
+  transition: transform 0.2s;
+}
+
+.watering-can:active {
+  cursor: grabbing;
+}
+
+.mound {
+  position: relative;
+  width: 80px;
+  height: 60px;
+  margin-top: 2rem;
+}
+
+.mound-top {
+  position: absolute;
+  width: 60px;
+  height: 40px;
+  background: var(--soil-dark);
+  border-radius: 50%;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.85;
+}
+
+.mound-bottom {
+  position: absolute;
+  width: 80px;
+  height: 30px;
+  background: var(--soil-dark);
+  border-radius: 50%;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.7;
+}
+
+.sprout {
+  position: absolute;
+  width: 8px;
+  height: 0;
+  background: var(--leaf-green);
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 4px;
+  opacity: 0;
+  transition: height 0.8s ease, opacity 0.4s;
+}
+
+.sprout.visible {
+  height: 30px;
+  opacity: 1;
+}
+
+/* Тёмная тема для пасхалки */
+body.dark-theme .mound-top,
+body.dark-theme .mound-bottom {
+  background: var(--dark-earth);
+}
+
+body.dark-theme .sprout {
+  background: var(--dark-leaf);
+}
+
 /* ——— АДАПТИВНОСТЬ ——— */
 @media (max-width: 600px) {
   body { padding: 1rem; }
   .blog-title { font-size: 1.9rem; }
+  .theme-toggle { top: 1rem; right: 1rem; }
+  .garden-paschal { bottom: 1.5rem; }
 }
