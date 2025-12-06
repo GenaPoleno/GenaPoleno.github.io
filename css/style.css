@@ -10,9 +10,9 @@
   
   /* Тёмная тема */
   --dark-bg: #1a1a1d;
-  --dark-text: #e6e1cf;
+  --dark-text: #e0e0e0; /* Светло-серый вместо желтоватого */
   --dark-line: #2d2d30;
-  --dark-earth: #a89f91;
+  --dark-earth: #b0a897; /* Более нейтральный */
   --dark-leaf: #88c9a1;
   
   /* Цвета по умолчанию */
@@ -168,24 +168,22 @@ a:hover {
   position: fixed;
   top: 1.5rem;
   right: 1.5rem;
-  background: none;
+  background: var(--leaf);
+  color: white;
   border: none;
-  width: 28px;
-  height: 28px;
+  border-radius: 4px;
+  padding: 0.3rem 0.8rem;
   cursor: pointer;
   z-index: 100;
-  opacity: 0.7;
-  transition: opacity 0.3s;
-  padding: 0;
+  opacity: 0.85;
+  transition: opacity 0.3s, background-color 0.3s;
+  font-size: 0.85rem;
+  font-weight: 500;
 }
 
 .theme-toggle:hover {
   opacity: 1;
-}
-
-.theme-toggle svg {
-  fill: var(--earth);
-  transition: fill 0.3s;
+  background-color: var(--earth);
 }
 
 /* ——— ТЁМНАЯ ТЕМА ——— */
